@@ -96,6 +96,52 @@ app.get("/country/count/spain", (req, res) => {
   }
 });
 
+// // Crea una ruta /country/count/spain para obtener EL NÚMERO DE LIBROS de España
+app.get("/country/count/spain", (req, res) => {
+  const country = "Spain";
+
+  // Busca el libro del autor especificado
+  const librosDeEspaña = books.filter((book) => book.country === country);
+  const cantidad = librosDeEspaña.length;
+
+  if (librosDeEspaña) {
+    // Si se encuentra el libro, responde con páginas y año
+    res.status(200).json({ Libros: cantidad });
+  } else {
+    // Si no se encuentra, devuelve un error
+    res.status(404).json({ msj: "Libro no encontrado" });
+  }
+});
+
+// Crea una ruta /country/at-least/germany para obtener VERDADERO O FALSO dependiendo de si hay o no un libro de Alemania
+app.get("/country/at-least/germany", (req, res) => {
+  const country = "Germany";
+
+  // Busca el libro del autor especificado
+  const menosAlemnania = books.filter((book) => book.country === country);
+  const alemania = menosAlemnania.length;
+
+  if (menosAlemnania) {
+    // Si se encuentra el libro, responde con páginas y año
+    res.status(200).json({ exists: true });
+  } else {
+    res.status(200).json({ exists: false });
+    // // Si no se encuentra, devuelve un error
+    // res.status(404).json({ msj: "Libro no encontrado" });
+  }
+});
+
+// Crea una ruta /pages/all-greater/200 para obtener VERDADERO O FALSO dependiendo de si todos los libros tienen más de 200 páginas
+app.get("/pages/all-greater/200", (req, res) => {
+  const pages = 200;
+
+  // Verifica si todos los libros tienen más de 200 páginas
+  const todosMayores = books.every((book) => book.pages > pages);
+
+  // Responde con verdadero o falso
+  res.status(200).json({ exists: todosMayores });
+});
+
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
 });

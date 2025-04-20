@@ -20,14 +20,29 @@ app.get("/books/all", (req, res) => {
   res.json(books);
 });
 
-//Crea una ruta /first para obtener el primer libro
+// Crea una ruta /first para obtener el primer libro
 app.get("/books/first", (req, res) => {
   res.json(books[0]);
 });
 
-//Crea una ruta /last para obtener el último libro
+// Crea una ruta /last para obtener el último libro
 app.get("/books/last", (req, res) => {
   res.json(books[books.length - 1]);
+});
+
+// Crea una ruta /middle para obtener el libro en la mitad (número 50 en el array)
+app.get("/books/middle", (req, res) => {
+  res.json(books[Math.round((books.length - 1) / 2)]);
+});
+
+// Crea una ruta /author/dante-alighieri para obtener SÓLO EL TÍTULO del libro de Dante Alighieri
+app.get("/author/dante-alighieri", (req, res) => {
+  const danteBook = books.find((book) => book.author === "Dante Alighieri");
+  if (danteBook) {
+    res.json({ title: danteBook.title });
+  } else {
+    res.status(404).json({ message: "Book not found" });
+  }
 });
 
 app.listen(port, () => {

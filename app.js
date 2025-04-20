@@ -45,6 +45,57 @@ app.get("/author/dante-alighieri", (req, res) => {
   }
 });
 
+// Crea una ruta /country/charles-dickens para obtener SÓLO EL PAÍS del libro de Charles Dickens
+app.get("/country/charles-dickens", (req, res) => {
+  const author = "Charles Dickens";
+
+  // Busca el libro del autor especificado
+  const book = books.find((book) => book.author() === author());
+
+  if (book) {
+    // Si se encuentra el libro, responde solo con el país
+    res.status(200).json({ country: book.country });
+  } else {
+    // Si no se encuentra, devuelve un error
+    res.status(404).json({ msj: "Libro no encontrado" });
+  }
+});
+
+// Crea una ruta /year&pages/cervantes para obtener LAS PÁGINAS Y EL AÑO del libro de Miguel de Cervantes, Ejemplo de respuesta: { pages: ..., year: ... }
+app.get("/year&pages/cervantes", (req, res) => {
+  const author = "Miguel de Cervantes";
+
+  // Busca el libro del autor especificado
+  const bookCervantes = books.find((book) => book.author === author);
+
+  if (bookCervantes) {
+    // Si se encuentra el libro, responde con páginas y año
+    res
+      .status(200)
+      .json({ pages: bookCervantes.pages, year: bookCervantes.year });
+  } else {
+    // Si no se encuentra, devuelve un error
+    res.status(404).json({ msj: "Libro no encontrado" });
+  }
+});
+
+// Crea una ruta /country/count/spain para obtener EL NÚMERO DE LIBROS de España
+app.get("/country/count/spain", (req, res) => {
+  const country = "Spain";
+
+  // Busca el libro del autor especificado
+  const librosDeEspaña = books.filter((book) => book.country === country);
+  const cantidad = librosDeEspaña.length;
+
+  if (selectedCountry) {
+    // Si se encuentra el libro, responde con páginas y año
+    res.status(200).json({ Libros: cantidad });
+  } else {
+    // Si no se encuentra, devuelve un error
+    res.status(404).json({ msj: "Libro no encontrado" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
 });

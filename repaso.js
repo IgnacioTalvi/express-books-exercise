@@ -46,6 +46,34 @@ const danteBook = books.find (book) = book.title === "Dante Alighieri";
     }
   });
 
+// Ejercicio 6 - Crea una ruta /country/charles-dickens para obtener SÓLO EL PAÍS del libro de Charles Dickens
+app.get("country/charles-dickens", (req, res) => {
+    const charlesDickensBook = books.find((book) => book.author === "Charles Dickens");
+  
+    if (charlesDickensBook) {
+      res.status(200).json({ country: charlesDickensBook.country }); // Devuelve el país del libro
+    } else {
+      res.status(404).json({ msj: "País no encontrado" }); // Mensaje si no se encuentra
+    }
+  });
+
+// Ejercicio 7 - Crea una ruta /year&pages/cervantes para obtener LAS PÁGINAS Y EL AÑO del libro de Miguel de Cervantes, Ejemplo de respuesta: { pages: ..., year: ... }
+app.get("/year&pages/cervantes", (req, res) => {
+    const author = books.find (book) = book.author === "Miguel de Cervantes";
+        
+    if (author) {
+            res.status(200).json({pages: book.pages, year: book.year}); // devuelve el libro con el título Harry Potter
+        } else {
+          // si el libro no existe
+          res.status(404).json({ msj: "Libro no encontrado" }); // devuelve un mensaje de error
+        }
+      });
+
+
+
+  
+
+
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
 });

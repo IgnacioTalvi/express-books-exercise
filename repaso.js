@@ -69,10 +69,29 @@ app.get("/year&pages/cervantes", (req, res) => {
         }
       });
 
-
-
+// Ejercicio 8 - Crea una ruta /country/count/spain para obtener EL NÚMERO DE LIBROS de España
+app.get("/country/count/spain", (req, res) => {
+    const spain = books.filter((book) => book.country === "Spain");
+        
+    if (spain.length > 0) {
+            res.status(200).json({libros: spain.length}); // devuelve el libro con el título Harry Potter
+        } else {
+          // si el libro no existe
+          res.status(404).json({ msj: "Pais no encontrado" }); // devuelve un mensaje de error
+        }
+      });
   
-
+// Ejercicio 9 - Crea una ruta /country/at-least/germany para obtener VERDADERO O FALSO dependiendo de si hay o no un libro de Alemania
+app.get("/country/at-least/germany", (req, res) => {
+    const bookGermany = books.find((book) => book.country === "Germany");
+        
+    if (bookGermany) {
+            res.status(200).json({respuesta: true}); // devuelve el libro con el título Harry Potter
+        } else {
+          // si el libro no existe
+          res.status(404).json({ respuesta: false }); // devuelve un mensaje de error
+        }
+      });
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);

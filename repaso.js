@@ -93,6 +93,18 @@ app.get("/country/at-least/germany", (req, res) => {
         }
       });
 
+// Ejercicio 10 - Crea una ruta /pages/all-greater/200 para obtener VERDADERO O FALSO dependiendo de si todos los libros tienen más de 200 páginas
+app.get("/pages/all-greater/200", (req, res) => {
+    const bookPages = books.filter((book) => book.pages === pages);
+        
+    if (bookPages >= 200) {
+            res.status(200).json({respuesta: true}); // devuelve el libro con el título Harry Potter
+        } else {
+          // si el libro no existe
+          res.status(404).json({ respuesta: false }); // devuelve un mensaje de error
+        }
+      });
+
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
 });
